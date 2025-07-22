@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Celebration Timeline</title>
+  <link href="https://fonts.googleapis.com/css2?family=Paytone+One&family=Poppins:wght@400;700&family=Caveat:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Base Styles with Birthday Celebration Theme */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #ffcef3, #a1c4fd, #c2e9fb, #ffecd2);
+      background-size: 400% 400%;
+      animation: gradientBackground 15s ease infinite;
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+      color: #5d4157;
+    }
+    
+    @keyframes gradientBackground {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    /* Confetti background pattern */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        radial-gradient(circle, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='%23ffffff' opacity='0.1' %3E%3Cpath d='M12 2L9.5 9H2l6 4.5L5.5 20l6.5-4 6.5 4-2.5-6.5L22 9h-7.5z'/%3E%3C/svg%3E");
+      background-size: 40px 40px, 30px 30px;
+      opacity: 0.4;
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    /* Vignette effect */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at center, transparent 60%, rgba(111, 66, 193, 0.20) 100%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 2rem;
+      text-align: center;
+    }
+    
+    /* Header Styles with Birthday Theme */
+    header {
+      margin-bottom: 4rem;
+      position: relative;
+      padding: 2rem 0;
+      animation: fadeIn 1.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h1 {
+      font-family: 'Paytone One', sans-serif;
+      font-size: 4rem;
+      background: linear-gradient(45deg, #ff3ca6, #784ba0, #2b86c5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+      position: relative;
+      display: inline-block;
+      letter-spacing: 2px;
+    }
+    
+    h1::before, h1::after {
+      content: "🎂";
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2.5rem;
+      animation: bounce 3s ease-in-out infinite alternate;
+    }
+    
+    @keyframes bounce {
+      from { transform: translateY(-50%) translateY(-10px); }
+      to { transform: translateY(-50%) translateY(10px); }
+    }
+    
+    h1::before {
+      left: -3.5rem;
+      animation-delay: 0.5s;
+    }
+    
+    h1::after {
+      right: -3.5rem;
+      animation-delay: 0s;
+    }
+    
+    .subtitle {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #784ba0;
+      font-weight: 400;
+      margin-bottom: 1.5rem;
+      line-height: 1.4;
+      animation: shimmer 3s infinite;
+      background: linear-gradient(90deg, 
+        rgba(120, 75, 160, 1) 0%, 
+        rgba(255, 60, 166, 1) 50%, 
+        rgba(120, 75, 160, 1) 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    @keyframes shimmer {
+      0% { background-position: 0% center; }
+      100% { background-position: 200% center; }
+    }
+    
+    .header-underline {
+      display: inline-block;
+      position: relative;
+      width: 200px;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(255, 60, 166, 0.6), transparent);
+    }
+    
+    .header-underline::after {
+      content: "🎈";
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.5rem;
+      animation: floatBalloon 3s infinite ease-in-out alternate;
+    }
+    
+    @keyframes floatBalloon {
+      0% { transform: translateX(-50%) translateY(0); }
+      100% { transform: translateX(-50%) translateY(-10px); }
+    }
+    
+    /* Timeline Container with Birthday Theme */
+    .timeline-container {
+      position: relative;
+      width: 100%;
+      padding: 3rem 0;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      margin-top: 2rem;
+    }
+    
+    .timeline-container::-webkit-scrollbar {
+      height: 8px;
+    }
+    
+    .timeline-container::-webkit-scrollbar-track {
+      background: rgba(255, 60, 166, 0.1);
+      border-radius: 10px;
+    }
+    
+    .timeline-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 60, 166, 0.3);
+      border-radius: 10px;
+    }
+    
+    /* Timeline Path with Party Theme */
+    .timeline {
+      position: relative;
+      min-width: 1100px;
+      height: 400px;
+      margin: 0 auto;
+    }
+    
+    .timeline-path {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(to right, 
+        #ff3ca6, 
+        #784ba0, 
+        #2b86c5,
+        #ff3ca6,
+        #784ba0);
+      transform: translateY(-50%);
+      z-index: 1;
+      box-shadow: 0 0 20px rgba(255, 60, 166, 0.5);
+      animation: glowPath 3s infinite alternate;
+      border-radius: 3px;
+    }
+    
+    @keyframes glowPath {
+      from { box-shadow: 0 0 10px rgba(255, 60, 166, 0.4); }
+      to { box-shadow: 0 0 25px rgba(255, 60, 166, 0.7); }
+    }
+    
+    .timeline-path::before, .timeline-path::after {
+      content: "🎉";
+      position: absolute;
+      top: 50%;
+      font-size: 1.5rem;
+      transform: translateY(-50%);
+    }
+    
+    .timeline-path::before {
+      left: -10px;
+      animation: pulseStart 2s infinite;
+    }
+    
+    .timeline-path::after {
+      right: -10px;
+      animation: pulseEnd 2s infinite;
+    }
+    
+    @keyframes pulseStart {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(1.2); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+    
+    @keyframes pulseEnd {
+      0% { transform: translateY(-50%) scale(1); }
+      50% { transform: translateY(-50%) scale(1.2); }
+      100% { transform: translateY(-50%) scale(1); }
+    }
+    
+    /* Milestone Styles with Birthday Theme */
+    .milestone {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    
+    .milestone:hover {
+      transform: translateY(-50%) scale(1.1);
+      filter: brightness(1.1);
+      z-index: 10;
+    }
+    
+    .milestone:nth-child(odd) {
+      margin-top: -80px;
+    }
+    
+    .milestone:nth-child(even) {
+      margin-top: 50px;
+    }
+    
+    .polaroid {
+      background: linear-gradient(135deg, #fff, #f8f9fa);
+      padding: 12px 12px 35px 12px;
+      box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.15),
+        0 0 0 1px rgba(255, 60, 166, 0.1);
+      display: inline-block;
+      transform: rotate(-3deg);
+      transition: all 0.5s ease;
+      width: 190px;
+      position: relative;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    
+    .polaroid::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 3px;
+      pointer-events: none;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.05);
+    }
+    
+    .polaroid:hover {
+      box-shadow: 
+        0 15px 30px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 60, 166, 0.2);
+      transform: rotate(-1deg) translateY(-10px);
+    }
+    
+    .milestone:nth-child(even) .polaroid {
+      transform: rotate(3deg);
+    }
+    
+    .milestone:nth-child(even) .polaroid:hover {
+      transform: rotate(1deg) translateY(-10px);
+    }
+    
+    .polaroid img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+      border-radius: 2px;
+      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+      transition: all 0.5s ease;
+      filter: saturate(1.2) brightness(1.05);
+    }
+    
+    .polaroid:hover img {
+      filter: saturate(1.4) brightness(1.1);
+    }
+    
+    .polaroid::after {
+      content: "🎁";
+      position: absolute;
+      font-size: 1.5rem;
+      bottom: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: pulse 2s infinite;
+      z-index: 1;
+    }
+    
+    /* Milestone labels */
+    .polaroid .milestone-label {
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'Caveat', cursive;
+      font-size: 1.1rem;
+      font-weight: bold;
+      background: linear-gradient(45deg, #ff3ca6, #784ba0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      padding: 0 5px;
+    }
+    
+    /* pulse animation */
+    @keyframes pulse {
+      0% {
+        transform: translateX(-50%) scale(1);
+      }
+      50% {
+        transform: translateX(-50%) scale(1.2);
+      }
+      100% {
+        transform: translateX(-50%) scale(1);
+      }
+    }
+    
+    /* Floating balloons */
+    .balloon {
+      position: absolute;
+      width: 40px;
+      height: 50px;
+      z-index: 0;
+      pointer-events: none;
+      animation: floatUp 15s linear infinite;
+    }
+    
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) rotate(0deg) translateX(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) rotate(360deg) translateX(100px);
+        opacity: 0;
+      }
+    }
+    
+    /* Modal Styles with Birthday Theme */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+    
+    .modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    
+    .modal-content {
+      background: linear-gradient(135deg, #fff, #f3f4f6);
+      padding: 35px;
+      max-width: 650px;
+      width: 85%;
+      border-radius: 15px;
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.3),
+        0 0 0 1px rgba(255, 60, 166, 0.1),
+        inset 0 0 30px rgba(255, 60, 166, 0.03);
+      text-align: center;
+      position: relative;
+      transform: scale(0.8);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border: 1px solid rgba(255, 60, 166, 0.2);
+      overflow: hidden;
+    }
+    
+    .modal-content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: 
+        radial-gradient(circle at top right, rgba(255, 60, 166, 0.1), transparent 70%),
+        radial-gradient(circle at bottom left, rgba(120, 75, 160, 0.1), transparent 70%);
+      pointer-events: none;
+    }
+    
+    .modal.active .modal-content {
+      transform: scale(1);
+    }
+    
+    .modal-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 1.8rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      border: 3px solid white;
+      transition: all 0.5s ease;
+      filter: saturate(1.2);
+    }
+    
+    .modal-title {
+      font-family: 'Paytone One', sans-serif;
+      font-size: 2.5rem;
+      background: linear-gradient(45deg, #ff3ca6, #784ba0, #2b86c5);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .modal-title::after {
+      content: "";
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, transparent, rgba(255, 60, 166, 0.6), transparent);
+    }
+    
+    .modal-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #784ba0;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+      text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8);
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background-color: white;
+      border: 1px solid #ff3ca6;
+      color: #ff3ca6;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+    
+    .close-btn:hover {
+      background-color: #ff3ca6;
+      color: white;
+      transform: rotate(90deg);
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Continue Button with Birthday Theme */
+    .continue-btn {
+      display: inline-block;
+      margin-top: 3rem;
+      padding: 1.2rem 3rem;
+      background: linear-gradient(45deg, #ff3ca6, #784ba0, #2b86c5);
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 
+        0 8px 20px rgba(255, 60, 166, 0.4),
+        0 0 0 3px rgba(255, 60, 166, 0.1);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      position: relative;
+      overflow: hidden;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+    
+    .continue-btn:hover {
+      transform: translateY(-7px) scale(1.05);
+      box-shadow: 
+        0 15px 30px rgba(255, 60, 166, 0.5),
+        0 0 0 3px rgba(255, 60, 166, 0.2);
+    }
+    
+    .continue-btn::after {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+      opacity: 0;
+      transform: scale(0.5);
+      transition: transform 0.5s ease, opacity 0.5s ease;
+    }
+    
+    .continue-btn:hover::after {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
+    /* Responsive Styles */
+    @media (max-width: 992px) {
+      h1 {
+        font-size: 3.5rem;
+      }
+      
+      .modal-content {
+        width: 90%;
+        padding: 30px;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 3rem;
+      }
+      
+      h1::before, h1::after {
+        font-size: 2rem;
+      }
+      
+      h1::before {
+        left: -2.5rem;
+      }
+      
+      h1::after {
+        right: -2.5rem;
+      }
+      
+      .subtitle {
+        font-size: 1.5rem;
+      }
+      
+      .container {
+        padding: 2rem 1.5rem;
+      }
+      
+      .timeline-container {
+        padding: 2rem 0;
+      }
+      
+      .polaroid {
+        width: 160px;
+      }
+      
+      .polaroid img {
+        height: 120px;
+      }
+      
+      .modal-title {
+        font-size: 2rem;
+      }
+      
+      .modal-caption {
+        font-size: 1.5rem;
+      }
+      
+      .continue-btn {
+        padding: 1rem 2.5rem;
+        font-size: 1.2rem;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      h1 {
+        font-size: 2.5rem;
+      }
+      
+      h1::before, h1::after {
+        font-size: 1.5rem;
+      }
+      
+      h1::before {
+        left: -2rem;
+      }
+      
+      h1::after {
+        right: -2rem;
+      }
+      
+      .subtitle {
+        font-size: 1.3rem;
+      }
+      
+      .container {
+        padding: 1.5rem 1rem;
+      }
+      
+      .polaroid {
+        width: 140px;
+      }
+      
+      .polaroid img {
+        height: 110px;
+      }
+      
+      .polaroid .milestone-label {
+        font-size: 1rem;
+      }
+      
+      .modal-content {
+        width: 95%;
+        padding: 25px 20px;
+      }
+      
+      .modal-title {
+        font-size: 1.8rem;
+      }
+      
+      .modal-caption {
+        font-size: 1.3rem;
+      }
+      
+      .continue-btn {
+        padding: 0.9rem 2rem;
+        font-size: 1.1rem;
+        margin-top: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>A small gift for you 💌</h1>
+      <p class="subtitle">Celebrating all the amazing moments<br>on this special day!</p>
+      <span class="header-underline"></span>
+    </header>
+    
+    <div class="timeline-container">
+      <div class="timeline">
+        <div class="timeline-path"></div>
+        
+        <!-- Milestones will be added here by JavaScript -->
+      </div>
+    </div>
+    
+    <button class="continue-btn">Make A Birthday Wish! 🎂</button>
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal" id="milestoneModal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <img src="" alt="" class="modal-image">
+      <h3 class="modal-title"></h3>
+      <p class="modal-caption"></p>
+    </div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Define milestones data with birthday celebration captions
+      const milestones = [
+        {
+          id: 1,
+          title: "First Birthday",
+          image: "pic1.jpg",
+          caption: "The day it all began - tiny hands reaching for that first cake, eyes wide with wonder. A star was born!",
+          position: 10 // percentage position along the timeline
+        },
+        {
+          id: 2,
+          title: "Childhood Fun",
+          image: "pic2.jpg",
+          caption: "Growing up with laughter and imagination, each birthday bringing new adventures and cherished memories.",
+          position: 25
+        },
+        {
+          id: 3,
+          title: "Sweet Sixteen",
+          image: "pic3.jpg",
+          caption: "A milestone celebration filled with dreams and possibilities, stepping into the world with confidence and joy.",
+          position: 40
+        },
+        {
+          id: 4,
+          title: "Graduation Day",
+          image: "pic4.jpg",
+          caption: "Achievements to celebrate! Proudly moving forward with determination and a heart full of ambition.",
+          position: 55
+        },
+        {
+          id: 5,
+          title: "Career Success",
+          image: "pic5.jpg",
+          caption: "Each year bringing new accomplishments and reasons to celebrate how far you've come on your journey.",
+          position: 70
+        },
+        {
+          id: 6,
+          title: "Today's Celebration",
+          image: "pic6.jpg",
+          caption: "Another amazing year around the sun! Here's to celebrating you and all the joy you bring to everyone around you.",
+          position: 85
+        }
+      ];
+      
+      const timeline = document.querySelector('.timeline');
+      const modal = document.getElementById('milestoneModal');
+      const modalImage = modal.querySelector('.modal-image');
+      const modalTitle = modal.querySelector('.modal-title');
+      const modalCaption = modal.querySelector('.modal-caption');
+      const closeBtn = modal.querySelector('.close-btn');
+      
+      // Create milestone elements with labels
+      milestones.forEach((milestone, index) => {
+        const milestoneEl = document.createElement('div');
+        milestoneEl.className = 'milestone';
+        milestoneEl.style.left = `${milestone.position}%`;
+        milestoneEl.style.opacity = '0';
+        milestoneEl.style.transform = 'translateY(-50%) translateX(-20px)';
+        
+        milestoneEl.innerHTML = `
+          <div class="polaroid">
+            <img src="${milestone.image}" alt="${milestone.title}">
+            <div class="milestone-label">${milestone.title}</div>
+          </div>
+        `;
+        
+        milestoneEl.setAttribute('data-id', milestone.id);
+        timeline.appendChild(milestoneEl);
+        
+        // Animate milestone appearance with delay based on index
+        setTimeout(() => {
+          milestoneEl.style.opacity = '1';
+          milestoneEl.style.transform = 'translateY(-50%) translateX(0)';
+          milestoneEl.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        }, 300 * index);
+        
+        // Add click event to show modal
+        milestoneEl.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          const milestoneData = milestones.find(m => m.id === parseInt(id));
+          
+          modalImage.src = milestoneData.image;
+          modalImage.alt = milestoneData.title;
+          modalTitle.textContent = milestoneData.title;
+          modalCaption.textContent = milestoneData.caption;
+          
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+      
+      // Close modal when X is clicked
+      closeBtn.addEventListener('click', function() {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+      
+      // Close modal when clicking outside the content
+      modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+          modal.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+      
+      // Create floating balloons background
+      function createBalloons() {
+        const balloonColors = ['#ff3ca6', '#784ba0', '#2b86c5', '#f8c144', '#5ce1e6'];
+        const balloonEmojis = ['🎈', '🎁', '🎊', '🎉', '🎂'];
+        
+        for (let i = 0; i < 30; i++) {
+          const balloon = document.createElement('div');
+          balloon.className = 'balloon';
+          
+          // Random positions
+          const startPositionX = Math.random() * 100;
+          const startPositionY = 100 + Math.random() * 100;
+          
+          // Random speeds
+          const duration = 15 + Math.random() * 30;
+          const delay = Math.random() * 15;
+          
+          // Use either color balloons or emoji balloons randomly
+          if (Math.random() > 0.5) {
+            const balloonColor = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+            balloon.style.background = `
+              radial-gradient(circle at 30% 30%, 
+                rgba(255, 255, 255, 0.8), 
+                ${balloonColor} 60%)
+            `;
+            balloon.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
+            
+            // Add balloon string
+            balloon.style.boxShadow = `0 25px 0 -12px ${balloonColor}85`;
+          } else {
+            // Use emoji
+            const emoji = balloonEmojis[Math.floor(Math.random() * balloonEmojis.length)];
+            balloon.textContent = emoji;
+            balloon.style.fontSize = `${30 + Math.random() * 20}px`;
+            balloon.style.height = 'auto';
+          }
+          
+          balloon.style.left = `${startPositionX}%`;
+          balloon.style.bottom = `-${startPositionY}px`;
+          balloon.style.animationDuration = `${duration}s`;
+          balloon.style.animationDelay = `${delay}s`;
+          balloon.style.opacity = Math.random() * 0.7 + 0.3;
+          
+          document.body.appendChild(balloon);
+        }
+      }
+      
+      createBalloons();
+      
+      // Continue button functionality
+      const continueBtn = document.querySelector('.continue-btn');
+      continueBtn.addEventListener('click', function() {
+        // Create a birthday wish modal
+        const wishModal = document.createElement('div');
+        wishModal.className = 'modal active';
+        
+        wishModal.innerHTML = `
+          <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h3 class="modal-title">Make a Birthday Wish!</h3>
+            <p class="modal-caption">Close your eyes, make a wish, and blow out the candles on your special day!</p>
+            <div style="font-size: 5rem; margin: 1.5rem 0; animation: pulse 2s infinite;">
+              🎂 ✨ 🎂
+            </div>
+            <button class="continue-btn">Blow Out Candles</button>
+          </div>
+        `;
+        
+        document.body.appendChild(wishModal);
+        document.body.style.overflow = 'hidden';
+        
+        // Close wish modal functionality
+        const wishCloseBtn = wishModal.querySelector('.close-btn');
+        wishCloseBtn.addEventListener('click', function() {
+          wishModal.classList.remove('active');
+          setTimeout(() => {
+            wishModal.remove();
+          }, 500);
+          document.body.style.overflow = '';
+        });
+        
+        // Blow out candles functionality
+        const blowOutBtn = wishModal.querySelector('.continue-btn');
+        blowOutBtn.addEventListener('click', function() {
+          const cakeElement = wishModal.querySelector('.modal-content div');
+          cakeElement.innerHTML = '🎂 🎉 🎂';
+          cakeElement.style.animation = 'none';
+          
+          blowOutBtn.textContent = 'Wish Granted!';
+          blowOutBtn.disabled = true;
+          
+          // Show confetti celebration
+          createConfetti();
+          
+          // After a delay, update the message
+          setTimeout(() => {
+            wishModal.querySelector('.modal-caption').textContent = 'Your wish has been made! May all your birthday dreams come true!';
+            blowOutBtn.textContent = 'Continue Celebrating';
+            blowOutBtn.disabled = false;
+            
+            blowOutBtn.addEventListener('click', function() {
+              wishModal.classList.remove('active');
+              setTimeout(() => {
+                wishModal.remove();
+              }, 500);
+              document.body.style.overflow = '';
+            }, { once: true });
+          }, 2000);
+        });
+        
+        // Close modal when clicking outside the content
+        wishModal.addEventListener('click', function(e) {
+          if (e.target === wishModal) {
+            wishModal.classList.remove('active');
+            setTimeout(() => {
+              wishModal.remove();
+            }, 500);
+            document.body.style.overflow = '';
+          }
+        });
+      });
+      
+      // Create confetti celebration
+      function createConfetti() {
+        const confettiColors = ['#ff3ca6', '#784ba0', '#2b86c5', '#f8c144', '#5ce1e6', '#ff7c43', '#ff3a5e'];
+        
+        for (let i = 0; i < 150; i++) {
+          const confetti = document.createElement('div');
+          confetti.style.position = 'fixed';
+          confetti.style.width = `${Math.random() * 10 + 5}px`;
+          confetti.style.height = `${Math.random() * 10 + 5}px`;
+          confetti.style.background = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+          confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+          confetti.style.left = `${Math.random() * 100}%`;
+          confetti.style.top = '0';
+          confetti.style.zIndex = '1500';
+          confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
+          
+          // Animation properties
+          confetti.style.opacity = '1';
+          confetti.style.transition = 'top 3s ease-out, opacity 3s ease-out, transform 3s ease-out';
+          
+          document.body.appendChild(confetti);
+          
+          // Start animation after a short delay
+          setTimeout(() => {
+            confetti.style.top = `${50 + Math.random() * 50}%`;
+            confetti.style.opacity = '0';
+            confetti.style.transform = `rotate(${Math.random() * 720}deg)`;
+            
+            // Remove confetti elements after animation completes
+            setTimeout(() => {
+              confetti.remove();
+            }, 3000);
+          }, 10);
+        }
+      }
+    });
+  </script>
+</body>
+</html>
